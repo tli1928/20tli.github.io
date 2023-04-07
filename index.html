@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Teng Li's Personal Website</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.17.0"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+
+</head>
+
+<body>
+
+
+<div class="container">
+    <h1 style="color:black; background-color:lightgreen;"> Gun Violence in the United States </h1>
+    <h2 style="color:lightgreen; text-align: center; font-size: 30px;"> by Teng Li </h2>
+    <p style="text-align: center; font-size: 20px;">
+        The data I found online is a record of more than 260k gun violence incidents, with
+        detailed information about each incident, available in CSV format. In recent years, the issue of gun violence
+        has become a major concern in many countries, including the United States. As a language model trained to
+        understand and analyze large sets of data, I was interested in exploring a dataset that provides detailed
+        information about gun violence incidents. After searching various sources, I came across a dataset on Kaggle
+        that records over 260,000 incidents of gun violence in the United States. This dataset is a compilation of
+        information from several sources, including the Gun Violence Archive, a non-profit organization that tracks
+        incidents of gun violence in the US. One of the reasons why I chose this dataset is because of its potential to
+        provide insights into the trends and patterns of gun violence in the US. By analyzing the data, researchers and
+        policymakers can identify the factors that contribute to gun violence and develop strategies to prevent it.
+        Moreover, this dataset is comprehensive, with information about the location, date, and type of incident, as
+        well as the number of people killed or injured.
+    </p>
+
+    <p style="text-align: center; font-size: 20px;">
+        After brief exploration of the data I obtained, two visuals were made via Altair library. The first visual is a
+        geospatial and a bar chart combined visual, where it illustrates the number of people who got injured recorded
+        in the dataset, which is inserted below.
+    </p>
+
+
+</div>
+
+
+<div id="vis1">
+
+    <script>
+        (function (vegaEmbed) {
+            var spec = {
+                "config": {"view": {"continuousWidth": 400, "continuousHeight": 300}},
+                "vconcat": [{
+                    "data": {
+                        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/us-10m.json",
+                        "format": {"feature": "states", "type": "topojson"}
+                    },
+                    "mark": "geoshape",
+                    "encoding": {
+                        "color": {
+                            "condition": {
+                                "field": "n_injured",
+                                "legend": null,
+                                "type": "quantitative",
+                                "selection": "selector001"
+                            }, "value": "lightgray"
+                        },
+                        "tooltip": [{"field": "state", "type": "nominal"}, {
+                            "field": "n_injured",
+                            "type": "quantitative"
+                        }]
+                    },
+                    "height": 300,
+                    "projection": {"type": "albersUsa"},
+                    "selection": {"selector001": {"type": "multi", "fields": ["state", "n_injured"]}},
+                    "title": "Number of People Injured by Gun Violence in Each State",
+                    "transform": [{
+                        "lookup": "id",
+                        "from": {
+                            "data": {"name": "data-f3907f6b0f0bf778edebff873b5d93e2"},
+                            "key": "id",
+                            "fields": ["n_injured", "state"]
+                        }
+                    }],
+                    "width": 700
+                }, {
+                    "data": {"name": "data-f3907f6b0f0bf778edebff873b5d93e2"},
+                    "mark": "rect",
+                    "encoding": {
+                        "color": {
+                            "condition": {
+                                "field": "n_injured",
+                                "legend": null,
+                                "type": "quantitative",
+                                "selection": "selector001"
+                            }, "value": "lightgray"
+                        },
+                        "x": {"field": "state", "type": "nominal"},
+                        "y": {"axis": {"orient": "right"}, "field": "n_injured", "type": "quantitative"}
+                    },
+                    "height": 300,
+                    "selection": {
+                        "selector002": {"type": "interval", "encodings": ["x"]},
+                        "selector001": {"type": "multi", "fields": ["state", "n_injured"]}
+                    },
+                    "width": 700
+                }],
+                "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json",
+                "datasets": {
+                    "data-f3907f6b0f0bf778edebff873b5d93e2": [{
+                        "state": "Alabama",
+                        "incident_id": 37000281,
+                        "n_killed": 84,
+                        "n_injured": 147,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 1447.0,
+                        "latitude": 11188.8732,
+                        "longitude": -29266.7993,
+                        "n_guns_involved": 67.0,
+                        "state_house_district": 18309.0,
+                        "state_senate_district": 5886.0,
+                        "id": 1
+                    }, {
+                        "state": "Alaska",
+                        "incident_id": 4573655,
+                        "n_killed": 10,
+                        "n_injured": 10,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 33.0,
+                        "latitude": 2260.2932,
+                        "longitude": -5393.946,
+                        "n_guns_involved": 7.0,
+                        "state_house_district": 486.0,
+                        "state_senate_district": 2.0,
+                        "id": 2
+                    }, {
+                        "state": "Arizona",
+                        "incident_id": 17269834,
+                        "n_killed": 57,
+                        "n_injured": 64,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 753.0,
+                        "latitude": 4665.2095,
+                        "longitude": -15679.422,
+                        "n_guns_involved": 29.0,
+                        "state_house_district": 2540.0,
+                        "state_senate_district": 2540.0,
+                        "id": 3
+                    }, {
+                        "state": "Arkansas",
+                        "incident_id": 14952497,
+                        "n_killed": 34,
+                        "n_injured": 61,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 313.0,
+                        "latitude": 4821.2964,
+                        "longitude": -12734.4435,
+                        "n_guns_involved": 20.0,
+                        "state_house_district": 5503.0,
+                        "state_senate_district": 3284.0,
+                        "id": 4
+                    }, {
+                        "state": "California",
+                        "incident_id": 106182241,
+                        "n_killed": 367,
+                        "n_injured": 473,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 17834.0,
+                        "latitude": 27316.7732,
+                        "longitude": -90924.592,
+                        "n_guns_involved": 91.0,
+                        "state_house_district": 26697.0,
+                        "state_senate_district": 13569.0,
+                        "id": 5
+                    }, {
+                        "state": "Colorado",
+                        "incident_id": 14264942,
+                        "n_killed": 55,
+                        "n_injured": 37,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 461.0,
+                        "latitude": 4610.2429,
+                        "longitude": -12294.332,
+                        "n_guns_involved": 3.0,
+                        "state_house_district": 2973.0,
+                        "state_senate_district": 2213.0,
+                        "id": 6
+                    }, {
+                        "state": "Connecticut",
+                        "incident_id": 14334562,
+                        "n_killed": 14,
+                        "n_injured": 48,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 256.0,
+                        "latitude": 4315.8944,
+                        "longitude": -7578.2679,
+                        "n_guns_involved": 14.0,
+                        "state_house_district": 7242.0,
+                        "state_senate_district": 1418.0,
+                        "id": 7
+                    }, {
+                        "state": "Delaware",
+                        "incident_id": 9159218,
+                        "n_killed": 10,
+                        "n_injured": 34,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 75.0,
+                        "latitude": 2965.9476,
+                        "longitude": -5667.088,
+                        "n_guns_involved": 13.0,
+                        "state_house_district": 1043.0,
+                        "state_senate_district": 578.0,
+                        "id": 8
+                    }, {
+                        "state": "District of Columbia",
+                        "incident_id": 22597809,
+                        "n_killed": 44,
+                        "n_injured": 42,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 187.0,
+                        "latitude": 7274.0184,
+                        "longitude": -14398.265800000001,
+                        "n_guns_involved": 7.0,
+                        "state_house_district": 0.0,
+                        "state_senate_district": 0.0,
+                        "id": 9
+                    }, {
+                        "state": "Florida",
+                        "incident_id": 100892518,
+                        "n_killed": 243,
+                        "n_injured": 452,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 11561.0,
+                        "latitude": 24291.4076,
+                        "longitude": -70850.7411,
+                        "n_guns_involved": 61.0,
+                        "state_house_district": 51236.0,
+                        "state_senate_district": 17249.0,
+                        "id": 10
+                    }, {
+                        "state": "Georgia",
+                        "incident_id": 37934467,
+                        "n_killed": 100,
+                        "n_injured": 162,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 1727.0,
+                        "latitude": 10020.2117,
+                        "longitude": -25404.5131,
+                        "n_guns_involved": 25.0,
+                        "state_house_district": 32591.0,
+                        "state_senate_district": 7875.0,
+                        "id": 11
+                    }, {
+                        "state": "Hawaii",
+                        "incident_id": 1267927,
+                        "n_killed": 2,
+                        "n_injured": 5,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 17.0,
+                        "latitude": 209.9364,
+                        "longitude": -1575.074,
+                        "n_guns_involved": 4.0,
+                        "state_house_district": 142.0,
+                        "state_senate_district": 73.0,
+                        "id": 12
+                    }, {
+                        "state": "Idaho",
+                        "incident_id": 3137000,
+                        "n_killed": 5,
+                        "n_injured": 6,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 38.0,
+                        "latitude": 1159.4843,
+                        "longitude": -2998.302,
+                        "n_guns_involved": 5.0,
+                        "state_house_district": 412.0,
+                        "state_senate_district": 412.0,
+                        "id": 13
+                    }, {
+                        "state": "Illinois",
+                        "incident_id": 64233149,
+                        "n_killed": 123,
+                        "n_injured": 345,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 4230.0,
+                        "latitude": 20138.2313,
+                        "longitude": -43206.8862,
+                        "n_guns_involved": 60.0,
+                        "state_house_district": 25192.0,
+                        "state_senate_district": 12714.0,
+                        "id": 14
+                    }, {
+                        "state": "Indiana",
+                        "incident_id": 38942473,
+                        "n_killed": 98,
+                        "n_injured": 165,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 1640.0,
+                        "latitude": 13112.2528,
+                        "longitude": -28124.6186,
+                        "n_guns_involved": 38.0,
+                        "state_house_district": 20552.0,
+                        "state_senate_district": 8322.0,
+                        "id": 15
+                    }, {
+                        "state": "Iowa",
+                        "incident_id": 15778036,
+                        "n_killed": 16,
+                        "n_injured": 49,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 360.0,
+                        "latitude": 6029.252,
+                        "longitude": -13423.1487,
+                        "n_guns_involved": 10.0,
+                        "state_house_district": 6481.0,
+                        "state_senate_district": 3283.0,
+                        "id": 16
+                    }, {
+                        "state": "Kansas",
+                        "incident_id": 7936534,
+                        "n_killed": 25,
+                        "n_injured": 46,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 171.0,
+                        "latitude": 2223.0127,
+                        "longitude": -5602.5905999999995,
+                        "n_guns_involved": 2.0,
+                        "state_house_district": 4205.0,
+                        "state_senate_district": 1185.0,
+                        "id": 17
+                    }, {
+                        "state": "Kentucky",
+                        "incident_id": 25958713,
+                        "n_killed": 31,
+                        "n_injured": 80,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 904.0,
+                        "latitude": 8570.9994,
+                        "longitude": -19260.3676,
+                        "n_guns_involved": 9.0,
+                        "state_house_district": 131.0,
+                        "state_senate_district": 34.0,
+                        "id": 18
+                    }, {
+                        "state": "Louisiana",
+                        "incident_id": 59025256,
+                        "n_killed": 114,
+                        "n_injured": 275,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 1545.0,
+                        "latitude": 15362.8565,
+                        "longitude": -45833.0079,
+                        "n_guns_involved": 45.0,
+                        "state_house_district": 33160.0,
+                        "state_senate_district": 7744.0,
+                        "id": 19
+                    }, {
+                        "state": "Maine",
+                        "incident_id": 4800856,
+                        "n_killed": 0,
+                        "n_injured": 12,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 58.0,
+                        "latitude": 1640.0749,
+                        "longitude": -2583.0322,
+                        "n_guns_involved": 2.0,
+                        "state_house_district": 2738.0,
+                        "state_senate_district": 712.0,
+                        "id": 20
+                    }, {
+                        "state": "Maryland",
+                        "incident_id": 31497314,
+                        "n_killed": 77,
+                        "n_injured": 110,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 1221.0,
+                        "latitude": 10309.2238,
+                        "longitude": -20165.2099,
+                        "n_guns_involved": 17.0,
+                        "state_house_district": 5781.0,
+                        "state_senate_district": 8464.0,
+                        "id": 21
+                    }, {
+                        "state": "Massachusetts",
+                        "incident_id": 22026040,
+                        "n_killed": 21,
+                        "n_injured": 50,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 801.0,
+                        "latitude": 7597.643,
+                        "longitude": -12888.4668,
+                        "n_guns_involved": 17.0,
+                        "state_house_district": 328.0,
+                        "state_senate_district": 13.0,
+                        "id": 22
+                    }, {
+                        "state": "Michigan",
+                        "incident_id": 40418448,
+                        "n_killed": 69,
+                        "n_injured": 168,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 2584.0,
+                        "latitude": 12776.9528,
+                        "longitude": -25082.4181,
+                        "n_guns_involved": 51.0,
+                        "state_house_district": 13083.0,
+                        "state_senate_district": 5292.0,
+                        "id": 23
+                    }, {
+                        "state": "Minnesota",
+                        "incident_id": 11754667,
+                        "n_killed": 24,
+                        "n_injured": 36,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 424.0,
+                        "latitude": 4325.403,
+                        "longitude": -8961.4779,
+                        "n_guns_involved": 9.0,
+                        "state_house_district": 0.0,
+                        "state_senate_district": 4049.0,
+                        "id": 24
+                    }, {
+                        "state": "Mississippi",
+                        "incident_id": 25812664,
+                        "n_killed": 54,
+                        "n_injured": 100,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 588.0,
+                        "latitude": 7458.646,
+                        "longitude": -20599.0767,
+                        "n_guns_involved": 45.0,
+                        "state_house_district": 15594.0,
+                        "state_senate_district": 6577.0,
+                        "id": 25
+                    }, {
+                        "state": "Missouri",
+                        "incident_id": 27064849,
+                        "n_killed": 87,
+                        "n_injured": 118,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 763.0,
+                        "latitude": 8052.4511,
+                        "longitude": -19206.5858,
+                        "n_guns_involved": 20.0,
+                        "state_house_district": 15239.0,
+                        "state_senate_district": 2976.0,
+                        "id": 26
+                    }, {
+                        "state": "Montana",
+                        "incident_id": 3573785,
+                        "n_killed": 17,
+                        "n_injured": 10,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 29.0,
+                        "latitude": 1364.4447,
+                        "longitude": -3265.102,
+                        "n_guns_involved": 1.0,
+                        "state_house_district": 0.0,
+                        "state_senate_district": 0.0,
+                        "id": 27
+                    }, {
+                        "state": "Nebraska",
+                        "incident_id": 4113974,
+                        "n_killed": 8,
+                        "n_injured": 14,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 70.0,
+                        "latitude": 1359.5317,
+                        "longitude": -3191.8682,
+                        "n_guns_involved": 4.0,
+                        "state_house_district": 0.0,
+                        "state_senate_district": 562.0,
+                        "id": 28
+                    }, {
+                        "state": "Nevada",
+                        "incident_id": 9555960,
+                        "n_killed": 27,
+                        "n_injured": 35,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 136.0,
+                        "latitude": 2749.8977,
+                        "longitude": -8623.504,
+                        "n_guns_involved": 4.0,
+                        "state_house_district": 1621.0,
+                        "state_senate_district": 813.0,
+                        "id": 29
+                    }, {
+                        "state": "New Hampshire",
+                        "incident_id": 4064134,
+                        "n_killed": 6,
+                        "n_injured": 9,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 41.0,
+                        "latitude": 1380.6938,
+                        "longitude": -2281.7834,
+                        "n_guns_involved": 4.0,
+                        "state_house_district": 0.0,
+                        "state_senate_district": 407.0,
+                        "id": 30
+                    }, {
+                        "state": "New Jersey",
+                        "incident_id": 37769238,
+                        "n_killed": 59,
+                        "n_injured": 158,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 1780.0,
+                        "latitude": 10956.148,
+                        "longitude": -20270.5933,
+                        "n_guns_involved": 22.0,
+                        "state_house_district": 5037.0,
+                        "state_senate_district": 5077.0,
+                        "id": 31
+                    }, {
+                        "state": "New Mexico",
+                        "incident_id": 7985932,
+                        "n_killed": 25,
+                        "n_injured": 25,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 103.0,
+                        "latitude": 1928.7076,
+                        "longitude": -5955.281,
+                        "n_guns_involved": 10.0,
+                        "state_house_district": 1895.0,
+                        "state_senate_district": 1233.0,
+                        "id": 32
+                    }, {
+                        "state": "New York",
+                        "incident_id": 55250640,
+                        "n_killed": 96,
+                        "n_injured": 221,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 6409.0,
+                        "latitude": 16047.5819,
+                        "longitude": -28836.7803,
+                        "n_guns_involved": 54.0,
+                        "state_house_district": 35551.0,
+                        "state_senate_district": 14610.0,
+                        "id": 33
+                    }, {
+                        "state": "North Carolina",
+                        "incident_id": 60597952,
+                        "n_killed": 124,
+                        "n_injured": 233,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 3162.0,
+                        "latitude": 17583.5823,
+                        "longitude": -39329.0062,
+                        "n_guns_involved": 46.0,
+                        "state_house_district": 25544.0,
+                        "state_senate_district": 10920.0,
+                        "id": 34
+                    }, {
+                        "state": "North Dakota",
+                        "incident_id": 1761177,
+                        "n_killed": 5,
+                        "n_injured": 1,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 16.0,
+                        "latitude": 757.7835,
+                        "longitude": -1594.1468,
+                        "n_guns_involved": 1.0,
+                        "state_house_district": 377.0,
+                        "state_senate_district": 377.0,
+                        "id": 35
+                    }, {
+                        "state": "Ohio",
+                        "incident_id": 69455229,
+                        "n_killed": 145,
+                        "n_injured": 255,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 4321.0,
+                        "latitude": 23901.4404,
+                        "longitude": -49203.8859,
+                        "n_guns_involved": 70.0,
+                        "state_house_district": 22801.0,
+                        "state_senate_district": 8345.0,
+                        "id": 36
+                    }, {
+                        "state": "Oklahoma",
+                        "incident_id": 12383713,
+                        "n_killed": 51,
+                        "n_injured": 54,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 263.0,
+                        "latitude": 3241.0056,
+                        "longitude": -8810.7804,
+                        "n_guns_involved": 5.0,
+                        "state_house_district": 5861.0,
+                        "state_senate_district": 2525.0,
+                        "id": 37
+                    }, {
+                        "state": "Oregon",
+                        "incident_id": 14336383,
+                        "n_killed": 24,
+                        "n_injured": 30,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 323.0,
+                        "latitude": 4403.1411,
+                        "longitude": -11971.5586,
+                        "n_guns_involved": 16.0,
+                        "state_house_district": 3270.0,
+                        "state_senate_district": 1666.0,
+                        "id": 38
+                    }, {
+                        "state": "Pennsylvania",
+                        "incident_id": 82397041,
+                        "n_killed": 147,
+                        "n_injured": 295,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 3807.0,
+                        "latitude": 20009.9292,
+                        "longitude": -37918.8038,
+                        "n_guns_involved": 76.0,
+                        "state_house_district": 1483.0,
+                        "state_senate_district": 245.0,
+                        "id": 39
+                    }, {
+                        "state": "Rhode Island",
+                        "incident_id": 4337355,
+                        "n_killed": 5,
+                        "n_injured": 22,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 58.0,
+                        "latitude": 1421.2634,
+                        "longitude": -2428.6237,
+                        "n_guns_involved": 5.0,
+                        "state_house_district": 610.0,
+                        "state_senate_district": 390.0,
+                        "id": 40
+                    }, {
+                        "state": "South Carolina",
+                        "incident_id": 37186590,
+                        "n_killed": 90,
+                        "n_injured": 148,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 1310.0,
+                        "latitude": 10389.3598,
+                        "longitude": -24737.3892,
+                        "n_guns_involved": 29.0,
+                        "state_house_district": 22051.0,
+                        "state_senate_district": 7886.0,
+                        "id": 41
+                    }, {
+                        "state": "South Dakota",
+                        "incident_id": 762225,
+                        "n_killed": 1,
+                        "n_injured": 2,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 7.0,
+                        "latitude": 309.7901,
+                        "longitude": -695.8974000000001,
+                        "n_guns_involved": 0.0,
+                        "state_house_district": 117.0,
+                        "state_senate_district": 117.0,
+                        "id": 42
+                    }, {
+                        "state": "Tennessee",
+                        "incident_id": 44547029,
+                        "n_killed": 111,
+                        "n_injured": 242,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 2030.0,
+                        "latitude": 13313.433,
+                        "longitude": -32405.2197,
+                        "n_guns_involved": 33.0,
+                        "state_house_district": 20084.0,
+                        "state_senate_district": 7023.0,
+                        "id": 43
+                    }, {
+                        "state": "Texas",
+                        "incident_id": 99293204,
+                        "n_killed": 262,
+                        "n_injured": 319,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 15110.0,
+                        "latitude": 22963.6541,
+                        "longitude": -72507.0501,
+                        "n_guns_involved": 85.0,
+                        "state_house_district": 63960.0,
+                        "state_senate_district": 12004.0,
+                        "id": 44
+                    }, {
+                        "state": "Utah",
+                        "incident_id": 5100163,
+                        "n_killed": 18,
+                        "n_injured": 14,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 87.0,
+                        "latitude": 1571.0761,
+                        "longitude": -4364.357,
+                        "n_guns_involved": 7.0,
+                        "state_house_district": 1518.0,
+                        "state_senate_district": 516.0,
+                        "id": 45
+                    }, {
+                        "state": "Vermont",
+                        "incident_id": 3468295,
+                        "n_killed": 3,
+                        "n_injured": 2,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 25.0,
+                        "latitude": 1103.0597,
+                        "longitude": -1822.7253,
+                        "n_guns_involved": 4.0,
+                        "state_house_district": 0.0,
+                        "state_senate_district": 0.0,
+                        "id": 46
+                    }, {
+                        "state": "Virginia",
+                        "incident_id": 32195188,
+                        "n_killed": 63,
+                        "n_injured": 139,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 1165.0,
+                        "latitude": 10004.4853,
+                        "longitude": -20734.4339,
+                        "n_guns_involved": 23.0,
+                        "state_house_district": 17909.0,
+                        "state_senate_district": 3662.0,
+                        "id": 47
+                    }, {
+                        "state": "Washington",
+                        "incident_id": 27268641,
+                        "n_killed": 61,
+                        "n_injured": 85,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 1080.0,
+                        "latitude": 8858.9966,
+                        "longitude": -22778.002,
+                        "n_guns_involved": 36.0,
+                        "state_house_district": 4511.0,
+                        "state_senate_district": 4511.0,
+                        "id": 48
+                    }, {
+                        "state": "West Virginia",
+                        "incident_id": 9767058,
+                        "n_killed": 20,
+                        "n_injured": 28,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 180.0,
+                        "latitude": 3122.2437,
+                        "longitude": -6590.9625,
+                        "n_guns_involved": 8.0,
+                        "state_house_district": 2439.0,
+                        "state_senate_district": 684.0,
+                        "id": 49
+                    }, {
+                        "state": "Wisconsin",
+                        "incident_id": 22997454,
+                        "n_killed": 32,
+                        "n_injured": 73,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 767.0,
+                        "latitude": 8931.7302,
+                        "longitude": -18282.6488,
+                        "n_guns_involved": 19.0,
+                        "state_house_district": 8623.0,
+                        "state_senate_district": 2947.0,
+                        "id": 50
+                    }, {
+                        "state": "Wyoming",
+                        "incident_id": 1117218,
+                        "n_killed": 2,
+                        "n_injured": 3,
+                        "incident_url_fields_missing": 0,
+                        "congressional_district": 8.0,
+                        "latitude": 345.2477,
+                        "longitude": -858.775,
+                        "n_guns_involved": 0.0,
+                        "state_house_district": 349.0,
+                        "state_senate_district": 163.0,
+                        "id": 51
+                    }]
+                }
+            };
+            var embedOpt = {"mode": "vega-lite"};
+
+            function showError(el, error) {
+                el.innerHTML = ('<div class="error" style="color:red;">'
+                    + '<p>JavaScript Error: ' + error.message + '</p>'
+                    + "<p>This usually means there's a typo in your chart specification. "
+                    + "See the javascript console for the full traceback.</p>"
+                    + '</div>');
+                throw error;
+            }
+
+            const el = document.getElementById('vis1');
+            vegaEmbed("#vis1", spec, embedOpt)
+                .catch(error => showError(el, error));
+        })(vegaEmbed);
+
+    </script>
+</div>
+
+
+<div id="vis2">
+    <script>
+        (function (vegaEmbed) {
+            var spec = {
+                "config": {"view": {"continuousWidth": 400, "continuousHeight": 300}},
+                "data": {"name": "data-8bbb365a61abc963bd61e21dca51ad46"},
+                "mark": "bar",
+                "encoding": {
+                    "color": {
+                        "condition": {
+                            "field": "state",
+                            "legend": null,
+                            "type": "nominal",
+                            "selection": "selector012"
+                        }, "value": "lightgray"
+                    },
+                    "tooltip": [{"field": "state", "type": "nominal"}, {"field": "n_killed", "type": "quantitative"}],
+                    "x": {"field": "state", "sort": "-y", "title": "State", "type": "nominal"},
+                    "y": {"field": "n_killed", "title": "Number of Killed", "type": "quantitative"}
+                },
+                "height": 500,
+                "selection": {
+                    "selector011": {"type": "interval", "encodings": ["x"]},
+                    "selector012": {
+                        "type": "single",
+                        "fields": ["state"],
+                        "bind": {
+                            "input": "select",
+                            "options": ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"],
+                            "name": "States"
+                        }
+                    }
+                },
+                "title": "Number of People Killed by Gun Violence in Each State",
+                "width": 800,
+                "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json",
+                "datasets": {
+                    "data-8bbb365a61abc963bd61e21dca51ad46": [{
+                        "state": "Alabama",
+                        "incident_id": 1093513669,
+                        "n_killed": 1037,
+                        "n_injured": 1653,
+                        "congressional_district": 14794.0,
+                        "latitude": 106215.3178,
+                        "longitude": -278708.6454,
+                        "n_guns_involved": 913.0,
+                        "state_house_district": 184773.0,
+                        "state_senate_district": 60791.0,
+                        "id": 1
+                    }, {
+                        "state": "Alaska",
+                        "incident_id": 360086785,
+                        "n_killed": 161,
+                        "n_injured": 205,
+                        "congressional_district": 832.0,
+                        "latitude": 52385.1213,
+                        "longitude": -126194.624,
+                        "n_guns_involved": 545.0,
+                        "state_house_district": 15579.0,
+                        "state_senate_district": 83.0,
+                        "id": 2
+                    }, {
+                        "state": "Arizona",
+                        "incident_id": 498752250,
+                        "n_killed": 645,
+                        "n_injured": 630,
+                        "congressional_district": 8033.0,
+                        "latitude": 47048.326,
+                        "longitude": -157963.387,
+                        "n_guns_involved": 710.0,
+                        "state_house_district": 27288.0,
+                        "state_senate_district": 27288.0,
+                        "id": 3
+                    }, {
+                        "state": "Arkansas",
+                        "incident_id": 565098576,
+                        "n_killed": 435,
+                        "n_injured": 698,
+                        "congressional_district": 3427.0,
+                        "latitude": 54923.9069,
+                        "longitude": -144474.7863,
+                        "n_guns_involved": 618.0,
+                        "state_house_district": 68821.0,
+                        "state_senate_district": 35934.0,
+                        "id": 4
+                    }, {
+                        "state": "California",
+                        "incident_id": 3266865623,
+                        "n_killed": 3423,
+                        "n_injured": 4633,
+                        "congressional_district": 216377.0,
+                        "latitude": 336375.2773,
+                        "longitude": -1118508.854,
+                        "n_guns_involved": 7942.0,
+                        "state_house_district": 321325.0,
+                        "state_senate_district": 160842.0,
+                        "id": 5
+                    }, {
+                        "state": "Colorado",
+                        "incident_id": 708304993,
+                        "n_killed": 459,
+                        "n_injured": 657,
+                        "congressional_district": 6789.0,
+                        "latitude": 72919.4872,
+                        "longitude": -195068.329,
+                        "n_guns_involved": 1072.0,
+                        "state_house_district": 52424.0,
+                        "state_senate_district": 32123.0,
+                        "id": 6
+                    }, {
+                        "state": "Connecticut",
+                        "incident_id": 740538111,
+                        "n_killed": 216,
+                        "n_injured": 813,
+                        "congressional_district": 5384.0,
+                        "latitude": 79265.3399,
+                        "longitude": -139489.2929,
+                        "n_guns_involved": 1253.0,
+                        "state_house_district": 150632.0,
+                        "state_senate_district": 28860.0,
+                        "id": 7
+                    }, {
+                        "state": "Delaware",
+                        "incident_id": 348651199,
+                        "n_killed": 144,
+                        "n_injured": 529,
+                        "congressional_district": 1077.0,
+                        "latitude": 42941.5266,
+                        "longitude": -82072.6628,
+                        "n_guns_involved": 447.0,
+                        "state_house_district": 15062.0,
+                        "state_senate_district": 8464.0,
+                        "id": 8
+                    }, {
+                        "state": "District of Columbia",
+                        "incident_id": 558071981,
+                        "n_killed": 301,
+                        "n_injured": 932,
+                        "congressional_district": 1729.0,
+                        "latitude": 67710.1232,
+                        "longitude": -134039.7596,
+                        "n_guns_involved": 370.0,
+                        "state_house_district": 0.0,
+                        "state_senate_district": 0.0,
+                        "id": 9
+                    }, {
+                        "state": "Florida",
+                        "incident_id": 3088658752,
+                        "n_killed": 2418,
+                        "n_injured": 4336,
+                        "congressional_district": 108101.0,
+                        "latitude": 238503.9336,
+                        "longitude": -692762.5263,
+                        "n_guns_involved": 5016.0,
+                        "state_house_district": 472351.0,
+                        "state_senate_district": 160967.0,
+                        "id": 10
+                    }, {
+                        "state": "Georgia",
+                        "incident_id": 2042209049,
+                        "n_killed": 1485,
+                        "n_injured": 2495,
+                        "congressional_district": 36524.0,
+                        "latitude": 195278.1815,
+                        "longitude": -494183.3776,
+                        "n_guns_involved": 2370.0,
+                        "state_house_district": 642293.0,
+                        "state_senate_district": 150826.0,
+                        "id": 11
+                    }, {
+                        "state": "Hawaii",
+                        "incident_id": 68242262,
+                        "n_killed": 42,
+                        "n_injured": 52,
+                        "congressional_district": 289.0,
+                        "latitude": 3669.5634,
+                        "longitude": -27905.644,
+                        "n_guns_involved": 104.0,
+                        "state_house_district": 3071.0,
+                        "state_senate_district": 1571.0,
+                        "id": 12
+                    }, {
+                        "state": "Idaho",
+                        "incident_id": 157737802,
+                        "n_killed": 93,
+                        "n_injured": 85,
+                        "congressional_district": 561.0,
+                        "latitude": 17345.2012,
+                        "longitude": -45031.782,
+                        "n_guns_involved": 448.0,
+                        "state_house_district": 6314.0,
+                        "state_senate_district": 6314.0,
+                        "id": 13
+                    }, {
+                        "state": "Illinois",
+                        "incident_id": 3823157738,
+                        "n_killed": 1961,
+                        "n_injured": 8028,
+                        "congressional_district": 68565.0,
+                        "latitude": 408978.657,
+                        "longitude": -868204.0967,
+                        "n_guns_involved": 5195.0,
+                        "state_house_district": 374901.0,
+                        "state_senate_district": 189674.0,
+                        "id": 14
+                    }, {
+                        "state": "Indiana",
+                        "incident_id": 1300675813,
+                        "n_killed": 963,
+                        "n_injured": 1858,
+                        "congressional_district": 17154.0,
+                        "latitude": 140249.1315,
+                        "longitude": -300370.8139,
+                        "n_guns_involved": 2478.0,
+                        "state_house_district": 207759.0,
+                        "state_senate_district": 84212.0,
+                        "id": 15
+                    }, {
+                        "state": "Iowa",
+                        "incident_id": 588080264,
+                        "n_killed": 165,
+                        "n_injured": 499,
+                        "congressional_district": 3354.0,
+                        "latitude": 66855.71,
+                        "longitude": -147689.9834,
+                        "n_guns_involved": 781.0,
+                        "state_house_district": 89087.0,
+                        "state_senate_district": 44937.0,
+                        "id": 16
+                    }, {
+                        "state": "Kansas",
+                        "incident_id": 470288608,
+                        "n_killed": 302,
+                        "n_injured": 550,
+                        "congressional_district": 3644.0,
+                        "latitude": 47023.2449,
+                        "longitude": -118443.6527,
+                        "n_guns_involved": 445.0,
+                        "state_house_district": 85831.0,
+                        "state_senate_district": 25859.0,
+                        "id": 17
+                    }, {
+                        "state": "Kentucky",
+                        "incident_id": 907318021,
+                        "n_killed": 636,
+                        "n_injured": 1082,
+                        "congressional_district": 9606.0,
+                        "latitude": 97656.5089,
+                        "longitude": -220149.5868,
+                        "n_guns_involved": 1093.0,
+                        "state_house_district": 584.0,
+                        "state_senate_district": 172.0,
+                        "id": 18
+                    }, {
+                        "state": "Louisiana",
+                        "incident_id": 1729398745,
+                        "n_killed": 1313,
+                        "n_injured": 2577,
+                        "congressional_district": 13608.0,
+                        "latitude": 147275.7531,
+                        "longitude": -439726.4775,
+                        "n_guns_involved": 1764.0,
+                        "state_house_district": 328721.0,
+                        "state_senate_district": 70020.0,
+                        "id": 19
+                    }, {
+                        "state": "Maine",
+                        "incident_id": 217628093,
+                        "n_killed": 64,
+                        "n_injured": 79,
+                        "congressional_district": 876.0,
+                        "latitude": 25562.4242,
+                        "longitude": -40177.0644,
+                        "n_guns_involved": 375.0,
+                        "state_house_district": 42594.0,
+                        "state_senate_district": 11388.0,
+                        "id": 20
+                    }, {
+                        "state": "Maryland",
+                        "incident_id": 1225779890,
+                        "n_killed": 994,
+                        "n_injured": 1915,
+                        "congressional_district": 18409.0,
+                        "latitude": 134772.297,
+                        "longitude": -263360.2867,
+                        "n_guns_involved": 1802.0,
+                        "state_house_district": 98755.0,
+                        "state_senate_district": 124797.0,
+                        "id": 21
+                    }, {
+                        "state": "Massachusetts",
+                        "incident_id": 1284332619,
+                        "n_killed": 288,
+                        "n_injured": 1030,
+                        "congressional_district": 16244.0,
+                        "latitude": 141096.1542,
+                        "longitude": -239155.2395,
+                        "n_guns_involved": 2415.0,
+                        "state_house_district": 3930.0,
+                        "state_senate_district": 400.0,
+                        "id": 22
+                    }, {
+                        "state": "Michigan",
+                        "incident_id": 1231671640,
+                        "n_killed": 965,
+                        "n_injured": 1793,
+                        "congressional_district": 29345.0,
+                        "latitude": 150068.1583,
+                        "longitude": -295033.5321,
+                        "n_guns_involved": 2199.0,
+                        "state_house_district": 162174.0,
+                        "state_senate_district": 63221.0,
+                        "id": 23
+                    }, {
+                        "state": "Minnesota",
+                        "incident_id": 409640944,
+                        "n_killed": 284,
+                        "n_injured": 505,
+                        "congressional_district": 5099.0,
+                        "latitude": 51865.7831,
+                        "longitude": -107340.2903,
+                        "n_guns_involved": 606.0,
+                        "state_house_district": 44.0,
+                        "state_senate_district": 43848.0,
+                        "id": 24
+                    }, {
+                        "state": "Mississippi",
+                        "incident_id": 700339102,
+                        "n_killed": 657,
+                        "n_injured": 993,
+                        "congressional_district": 5258.0,
+                        "latitude": 65051.2759,
+                        "longitude": -180342.2183,
+                        "n_guns_involved": 425.0,
+                        "state_house_district": 141716.0,
+                        "state_senate_district": 59188.0,
+                        "id": 25
+                    }, {
+                        "state": "Missouri",
+                        "incident_id": 1512663487,
+                        "n_killed": 1241,
+                        "n_injured": 2209,
+                        "congressional_district": 13870.0,
+                        "latitude": 156452.8885,
+                        "longitude": -372460.0494,
+                        "n_guns_involved": 1811.0,
+                        "state_house_district": 297523.0,
+                        "state_senate_district": 53825.0,
+                        "id": 26
+                    }, {
+                        "state": "Montana",
+                        "incident_id": 142571652,
+                        "n_killed": 97,
+                        "n_injured": 79,
+                        "congressional_district": 372.0,
+                        "latitude": 17379.1866,
+                        "longitude": -41605.334,
+                        "n_guns_involved": 337.0,
+                        "state_house_district": 48.0,
+                        "state_senate_district": 24.0,
+                        "id": 27
+                    }, {
+                        "state": "Nebraska",
+                        "incident_id": 362122708,
+                        "n_killed": 152,
+                        "n_injured": 459,
+                        "congressional_district": 1791.0,
+                        "latitude": 40562.0963,
+                        "longitude": -94962.6817,
+                        "n_guns_involved": 406.0,
+                        "state_house_district": 21.0,
+                        "state_senate_district": 16762.0,
+                        "id": 28
+                    }, {
+                        "state": "Nevada",
+                        "incident_id": 487080346,
+                        "n_killed": 494,
+                        "n_injured": 615,
+                        "congressional_district": 2802.0,
+                        "latitude": 46847.4894,
+                        "longitude": -147169.062,
+                        "n_guns_involved": 857.0,
+                        "state_house_district": 24576.0,
+                        "state_senate_district": 12562.0,
+                        "id": 29
+                    }, {
+                        "state": "New Hampshire",
+                        "incident_id": 232532592,
+                        "n_killed": 56,
+                        "n_injured": 91,
+                        "congressional_district": 795.0,
+                        "latitude": 26774.4531,
+                        "longitude": -44319.4631,
+                        "n_guns_involved": 431.0,
+                        "state_house_district": 1980.0,
+                        "state_senate_district": 8521.0,
+                        "id": 30
+                    }, {
+                        "state": "New Jersey",
+                        "incident_id": 1135376659,
+                        "n_killed": 742,
+                        "n_injured": 1621,
+                        "congressional_district": 24369.0,
+                        "latitude": 137022.2585,
+                        "longitude": -252791.9707,
+                        "n_guns_involved": 1557.0,
+                        "state_house_district": 68049.0,
+                        "state_senate_district": 68055.0,
+                        "id": 31
+                    }, {
+                        "state": "New Mexico",
+                        "incident_id": 387944106,
+                        "n_killed": 307,
+                        "n_injured": 353,
+                        "congressional_district": 1727.0,
+                        "latitude": 34425.7837,
+                        "longitude": -105215.734,
+                        "n_guns_involved": 612.0,
+                        "state_house_district": 30077.0,
+                        "state_senate_district": 19939.0,
+                        "id": 32
+                    }, {
+                        "state": "New York",
+                        "incident_id": 2549299924,
+                        "n_killed": 1187,
+                        "n_injured": 3518,
+                        "congressional_district": 112840.0,
+                        "latitude": 279883.5096,
+                        "longitude": -503919.4571,
+                        "n_guns_involved": 4167.0,
+                        "state_house_district": 623398.0,
+                        "state_senate_district": 257686.0,
+                        "id": 33
+                    }, {
+                        "state": "North Carolina",
+                        "incident_id": 1908836303,
+                        "n_killed": 1373,
+                        "n_injured": 2885,
+                        "congressional_district": 35603.0,
+                        "latitude": 194289.7298,
+                        "longitude": -435083.9929,
+                        "n_guns_involved": 1652.0,
+                        "state_house_district": 305287.0,
+                        "state_senate_district": 127426.0,
+                        "id": 34
+                    }, {
+                        "state": "North Dakota",
+                        "incident_id": 136861872,
+                        "n_killed": 47,
+                        "n_injured": 78,
+                        "congressional_district": 359.0,
+                        "latitude": 17014.6051,
+                        "longitude": -36036.1705,
+                        "n_guns_involved": 209.0,
+                        "state_house_district": 8621.0,
+                        "state_senate_district": 8621.0,
+                        "id": 35
+                    }, {
+                        "state": "Ohio",
+                        "incident_id": 2164126443,
+                        "n_killed": 1458,
+                        "n_injured": 3477,
+                        "congressional_district": 46500.0,
+                        "latitude": 245457.706,
+                        "longitude": -503717.1152,
+                        "n_guns_involved": 4182.0,
+                        "state_house_district": 222505.0,
+                        "state_senate_district": 89502.0,
+                        "id": 36
+                    }, {
+                        "state": "Oklahoma",
+                        "incident_id": 785817051,
+                        "n_killed": 561,
+                        "n_injured": 925,
+                        "congressional_district": 5682.0,
+                        "latitude": 73945.3488,
+                        "longitude": -200188.8686,
+                        "n_guns_involved": 992.0,
+                        "state_house_district": 134295.0,
+                        "state_senate_district": 59562.0,
+                        "id": 37
+                    }, {
+                        "state": "Oregon",
+                        "incident_id": 578534191,
+                        "n_killed": 288,
+                        "n_injured": 437,
+                        "congressional_district": 4622.0,
+                        "latitude": 66536.918,
+                        "longitude": -182122.5784,
+                        "n_guns_involved": 1615.0,
+                        "state_house_district": 48783.0,
+                        "state_senate_district": 24765.0,
+                        "id": 38
+                    }, {
+                        "state": "Pennsylvania",
+                        "incident_id": 2037400486,
+                        "n_killed": 1465,
+                        "n_injured": 3259,
+                        "congressional_district": 44606.0,
+                        "latitude": 222634.5119,
+                        "longitude": -423856.3076,
+                        "n_guns_involved": 2968.0,
+                        "state_house_district": 6778.0,
+                        "state_senate_district": 1867.0,
+                        "id": 39
+                    }, {
+                        "state": "Rhode Island",
+                        "incident_id": 212835543,
+                        "n_killed": 40,
+                        "n_injured": 232,
+                        "congressional_district": 851.0,
+                        "latitude": 24163.0474,
+                        "longitude": -41288.9266,
+                        "n_guns_involved": 292.0,
+                        "state_house_district": 11748.0,
+                        "state_senate_district": 6048.0,
+                        "id": 40
+                    }, {
+                        "state": "South Carolina",
+                        "incident_id": 1512345529,
+                        "n_killed": 995,
+                        "n_injured": 1874,
+                        "congressional_district": 18823.0,
+                        "latitude": 148122.8623,
+                        "longitude": -353850.6805,
+                        "n_guns_involved": 1588.0,
+                        "state_house_district": 319669.0,
+                        "state_senate_district": 118120.0,
+                        "id": 41
+                    }, {
+                        "state": "South Dakota",
+                        "incident_id": 112733926,
+                        "n_killed": 57,
+                        "n_injured": 72,
+                        "congressional_district": 265.0,
+                        "latitude": 11670.2206,
+                        "longitude": -26295.7585,
+                        "n_guns_involved": 334.0,
+                        "state_house_district": 4462.0,
+                        "state_senate_district": 4782.0,
+                        "id": 42
+                    }, {
+                        "state": "Tennessee",
+                        "incident_id": 1704416887,
+                        "n_killed": 1063,
+                        "n_injured": 2684,
+                        "congressional_district": 27380.0,
+                        "latitude": 166463.6918,
+                        "longitude": -407704.869,
+                        "n_guns_involved": 1610.0,
+                        "state_house_district": 274264.0,
+                        "state_senate_district": 95111.0,
+                        "id": 43
+                    }, {
+                        "state": "Texas",
+                        "incident_id": 3244134274,
+                        "n_killed": 3154,
+                        "n_injured": 3633,
+                        "congressional_district": 175483.0,
+                        "latitude": 269088.1212,
+                        "longitude": -849691.7928,
+                        "n_guns_involved": 4036.0,
+                        "state_house_district": 728603.0,
+                        "state_senate_district": 143183.0,
+                        "id": 44
+                    }, {
+                        "state": "Utah",
+                        "incident_id": 267699280,
+                        "n_killed": 177,
+                        "n_injured": 225,
+                        "congressional_district": 1676.0,
+                        "latitude": 28158.5774,
+                        "longitude": -77784.281,
+                        "n_guns_involved": 603.0,
+                        "state_house_district": 23332.0,
+                        "state_senate_district": 7372.0,
+                        "id": 45
+                    }, {
+                        "state": "Vermont",
+                        "incident_id": 111370077,
+                        "n_killed": 35,
+                        "n_injured": 57,
+                        "congressional_district": 338.0,
+                        "latitude": 15112.6956,
+                        "longitude": -24988.509,
+                        "n_guns_involved": 177.0,
+                        "state_house_district": 0.0,
+                        "state_senate_district": 0.0,
+                        "id": 46
+                    }, {
+                        "state": "Virginia",
+                        "incident_id": 1327493724,
+                        "n_killed": 862,
+                        "n_injured": 2113,
+                        "congressional_district": 15602.0,
+                        "latitude": 134394.2639,
+                        "longitude": -278445.9323,
+                        "n_guns_involved": 965.0,
+                        "state_house_district": 231593.0,
+                        "state_senate_district": 49654.0,
+                        "id": 47
+                    }, {
+                        "state": "Washington",
+                        "incident_id": 815016946,
+                        "n_killed": 520,
+                        "n_injured": 773,
+                        "congressional_district": 12960.0,
+                        "latitude": 100614.5535,
+                        "longitude": -258018.856,
+                        "n_guns_involved": 1899.0,
+                        "state_house_district": 54316.0,
+                        "state_senate_district": 54316.0,
+                        "id": 48
+                    }, {
+                        "state": "West Virginia",
+                        "incident_id": 345456681,
+                        "n_killed": 193,
+                        "n_injured": 403,
+                        "congressional_district": 2124.0,
+                        "latitude": 35841.6,
+                        "longitude": -75756.5948,
+                        "n_guns_involved": 428.0,
+                        "state_house_district": 29111.0,
+                        "state_senate_district": 8126.0,
+                        "id": 49
+                    }, {
+                        "state": "Wisconsin",
+                        "incident_id": 947112567,
+                        "n_killed": 537,
+                        "n_injured": 1362,
+                        "congressional_district": 10448.0,
+                        "latitude": 120104.71399999999,
+                        "longitude": -245571.7513,
+                        "n_guns_involved": 900.0,
+                        "state_house_district": 105241.0,
+                        "state_senate_district": 36010.0,
+                        "id": 50
+                    }, {
+                        "state": "Wyoming",
+                        "incident_id": 137034520,
+                        "n_killed": 46,
+                        "n_injured": 35,
+                        "congressional_district": 341.0,
+                        "latitude": 14682.2698,
+                        "longitude": -36527.34,
+                        "n_guns_involved": 97.0,
+                        "state_house_district": 15078.0,
+                        "state_senate_district": 8337.0,
+                        "id": 51
+                    }]
+                }
+            };
+            var embedOpt = {"mode": "vega-lite"};
+
+            function showError(el, error) {
+                el.innerHTML = ('<div class="error" style="color:red;">'
+                    + '<p>JavaScript Error: ' + error.message + '</p>'
+                    + "<p>This usually means there's a typo in your chart specification. "
+                    + "See the javascript console for the full traceback.</p>"
+                    + '</div>');
+                throw error;
+            }
+
+            const el = document.getElementById('vis2');
+            vegaEmbed("#vis2", spec, embedOpt)
+                .catch(error => showError(el, error));
+        })(vegaEmbed);
+
+    </script>
+</div>
+
+
+<div class="container">
+    <h2 style="color:black; font-size: 25px;">
+        Final Inforgraphic
+    </h2>
+</div>
+
+<div>
+    <img src='infographic_1.png'/>
+    <img src='infographic_2.png'/>
+</div>
+
+<div class="container">
+    <h2 style="color:black; font-size: 25px;">
+        Thank you!
+    </h2>
+</div>
+
+</body>
+</html>
